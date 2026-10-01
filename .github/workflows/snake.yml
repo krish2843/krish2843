@@ -1,0 +1,24 @@
+name: Generate GitHub Contribution Snake
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate snake
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: Krish2843
+          outputs: |
+            github-snake.svg?color_snake=%2300FF88&color_dots=%230D1117,%2300FF88,%2300E5FF,%239B59FF,%23FFFFFF
+
+      - name: Commit snake
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "Update GitHub contribution snake"
+          add: "github-snake.svg"

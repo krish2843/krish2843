@@ -7,6 +7,9 @@ on:
 
 jobs:
   generate:
+    permissions:
+      contents: write
+
     runs-on: ubuntu-latest
 
     steps:
@@ -15,10 +18,12 @@ jobs:
         with:
           github_user_name: Krish2843
           outputs: |
-            github-snake.svg?color_snake=%2300FF88&color_dots=%230D1117,%2300FF88,%2300E5FF,%239B59FF,%23FFFFFF
+            dist/github-contribution-grid-snake.svg?color_snake=%2300FF88&color_dots=%230D1117,%2300FF88,%2300E5FF,%239B59FF,%23FFFFFF
 
-      - name: Commit snake
-        uses: EndBug/add-and-commit@v9
+      - name: Publish snake
+        uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
-          message: "Update GitHub contribution snake"
-          add: "github-snake.svg"
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
